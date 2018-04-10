@@ -3,6 +3,7 @@
 namespace MlRecommendationBlock\Widgets;
 
 use MlRecommendationBlock;
+use MlRecommendationBlock\Classes\Rout;
 use WP_Widget;
 
 class MagicWidget extends WP_Widget {
@@ -22,12 +23,9 @@ class MagicWidget extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-
+	    new Rout();
 		echo $args['before_widget'];
 		?>
-        <div>
-            <h1>Magic</h1>
-        </div>
 
 		<?php
 		echo $args['after_widget'];
