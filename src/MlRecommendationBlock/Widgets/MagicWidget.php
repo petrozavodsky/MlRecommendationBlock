@@ -3,7 +3,7 @@
 namespace MlRecommendationBlock\Widgets;
 
 use MlRecommendationBlock;
-use MlRecommendationBlock\Classes\Rout;
+use MlRecommendationBlock\Classes\QueryParams;
 use WP_Widget;
 
 class MagicWidget extends WP_Widget {
@@ -23,7 +23,7 @@ class MagicWidget extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-	    new Rout();
+	    new QueryParams();
 		echo $args['before_widget'];
 		?>
 

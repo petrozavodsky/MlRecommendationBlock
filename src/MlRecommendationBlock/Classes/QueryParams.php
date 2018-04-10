@@ -2,7 +2,7 @@
 
 namespace MlRecommendationBlock\Classes;
 
-class Rout
+class QueryParams
 {
     public $excluded = [];
 
