@@ -6,16 +6,16 @@ class QueryParams
 {
     public $excluded = [];
 
-    private $tags = [];
+    public $tags = [];
 
     public function __construct()
     {
         $this->excluded();
+        $this->date_offset();
         if (is_singular()) {
             $this->tags($GLOBALS['wp_query']->queried_object_id);
         }
 
-        d($this);
     }
 
     private function excluded()
