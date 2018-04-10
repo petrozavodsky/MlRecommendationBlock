@@ -8,6 +8,8 @@ class QueryParams
 
     public $tags = [];
 
+    public $date_qyery =[];
+
     public function __construct()
     {
         $this->excluded();
@@ -15,6 +17,16 @@ class QueryParams
         if (is_singular()) {
             $this->tags($GLOBALS['wp_query']->queried_object_id);
         }
+
+    }
+
+    private function date_offset()
+    {
+        $this->date_qyery = [
+        [
+            'after' => '3 day ago'
+        ]
+    ];
 
     }
 
