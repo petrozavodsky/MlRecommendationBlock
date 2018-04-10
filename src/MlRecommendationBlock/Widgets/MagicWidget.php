@@ -1,23 +1,22 @@
 <?php
 
-namespace WordpressMagicBoilerplate\Widgets;
+namespace MlRecommendationBlock\Widgets;
 
-use WordpressMagicBoilerplate;
+use MlRecommendationBlock;
 use WP_Widget;
 
 class MagicWidget extends WP_Widget {
-	private $textdomain = __NAMESPACE__;
-	private $suffix = " - MagicWidget";
+	private $suffix = " - ML widget";
 
 	function __construct() {
-		$this->textdomain = WordpressMagicBoilerplate::$textdomine;
 		$className        = get_called_class();
 		$className        = str_replace( "\\", '-', $className );
+
 		parent::__construct(
 			$className,
-			__( "My widget ", $this->textdomain ) . $this->suffix,
+			__( "Recommendation ", 'MlRecommendationBlock' ) . $this->suffix,
 			[
-				'description' => __( "My widget", $this->textdomain ) . $this->suffix
+				'description' => __( "Recommendation block widget", 'MlRecommendationBlock' ) . $this->suffix
 			]
 		);
 	}
@@ -36,7 +35,7 @@ class MagicWidget extends WP_Widget {
 
 
 	public function form( $instance ) {
-		echo '<p class="no-options-widget">' . __( 'There are no options for this widget.', $this->textdomain ) . '</p>';
+		echo '<p class="no-options-widget">' . __( 'There are no options for this widget.', 'MlRecommendationBlock' ) . '</p>';
 
 		return 'noform';
 	}
