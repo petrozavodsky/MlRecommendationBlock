@@ -6,10 +6,16 @@ class Rout
 {
     public $excluded = [];
 
+    private $tags = [];
+
     public function __construct()
     {
         $this->excluded();
-        d($this->excluded);
+        if (is_singular()) {
+            $this->tags($GLOBALS['wp_query']->queried_object_id);
+        }
+
+        d($this);
     }
 
     private function excluded()
@@ -21,4 +27,10 @@ class Rout
             $GLOBALS['wp_query']->posts
         );
     }
+
+    private function tags($post_id)
+    {
+        $this->tags = wp_get_post_tags($post_id, ['fields' => 'ids']);
+    }
+
 }
