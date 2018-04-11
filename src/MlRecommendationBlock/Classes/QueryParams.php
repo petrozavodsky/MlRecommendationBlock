@@ -10,21 +10,21 @@ class QueryParams
 
     public $date_qyery =[];
 
-    public function __construct()
+    public function __construct($days)
     {
         $this->excluded();
-        $this->date_offset();
+        $this->date_offset($days);
         if (is_singular()) {
             $this->tags($GLOBALS['wp_query']->queried_object_id);
         }
 
     }
 
-    private function date_offset()
+    private function date_offset($days=3)
     {
         $this->date_qyery = [
         [
-            'after' => '3 day ago'
+            'after' => "{$days} day ago"
         ]
     ];
 
