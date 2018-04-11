@@ -19,6 +19,7 @@ new Autoloader( __FILE__, 'MlRecommendationBlock' );
 
 
 use MlRecommendationBlock\Base\Wrap;
+use MlRecommendationBlock\Classes\MetaBox;
 use MlRecommendationBlock\Utils\ActivateWidgets;
 
 class MlRecommendationBlock extends Wrap {
@@ -27,6 +28,8 @@ class MlRecommendationBlock extends Wrap {
 
 	function __construct() {
 		self::$textdomine = $this->setTextdomain();
+
+		new MetaBox();
 
 		new ActivateWidgets(
 			__FILE__,

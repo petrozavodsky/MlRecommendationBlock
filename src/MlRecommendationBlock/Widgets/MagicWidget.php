@@ -24,6 +24,8 @@ class MagicWidget extends WP_Widget {
 
 	public function widget( $args, $instance ) {
 		$title          = apply_filters( 'widget_title', $instance['title'] );
+		$post_types = apply_filters('MlRecommendationBlock__post_types',[ 'post' ]);
+
 		echo $args['before_widget'];
 		?>
 
@@ -35,6 +37,7 @@ class MagicWidget extends WP_Widget {
 	public function form( $instance ) {
 
 		?>
+
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>">Заголовок</label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
@@ -42,6 +45,7 @@ class MagicWidget extends WP_Widget {
                    type="text"
                    value="<?php echo esc_attr( $instance['title'] ); ?>"/>
         </p>
+
         <p>
             <label for="<?php echo $this->get_field_id( 'posts_per_page' ); ?>">
 				<?php _e( 'Number of posts:', 'MlRecommendationBlock' ); ?>
@@ -85,7 +89,6 @@ class MagicWidget extends WP_Widget {
 	}
 
 	private function validate( $array ) {
-
 
 		array_walk( $array, function ( $v, $k ) {
 
