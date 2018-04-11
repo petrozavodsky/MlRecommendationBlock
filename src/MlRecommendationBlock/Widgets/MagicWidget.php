@@ -23,8 +23,8 @@ class MagicWidget extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-		$title          = apply_filters( 'widget_title', $instance['title'] );
-		$post_types = apply_filters('MlRecommendationBlock__post_types',[ 'post' ]);
+		$title      = apply_filters( 'widget_title', $instance['title'] );
+		$post_types = apply_filters( 'MlRecommendationBlock__post_types', [ 'post' ] );
 
 		echo $args['before_widget'];
 		?>
@@ -68,16 +68,57 @@ class MagicWidget extends WP_Widget {
                    size="3"/>
         </p>
 
+        <p>
+            <label for="<?php echo $this->get_field_id( 'exclude_posts_in_taxonomy' ); ?>">
+				<?php _e( 'Number of posts:', 'MlRecommendationBlock' ); ?>
+                <select name="<?php echo $this->get_field_name( 'exclude_posts_in_taxonomy' ); ?>">
 
+                    <option value="none" <?php selected( $instance['exclude_posts_in_taxonomy'], 'none', true ); ?> >
+						<?php _e( 'none', 'MlRecommendationBlock' ); ?>
+                    </option>
+
+					<?php foreach ( $this->taxonomy_helper() as $item ) : ?>
+                        <option
+                             value="<?php echo $item; ?>"
+                            <?php selected( $instance['exclude_posts_in_taxonomy'], $item, true ); ?>
+                        ><?php echo $item; ?></option>
+					<?php endforeach; ?>
+
+                </select>
+            </label>
+        </p>
 
 		<?php
 	}
 
 	public function update( $new_instance, $old_instance ) {
 
-	    $instance = $this->validate($new_instance);
+		$instance = $this->validate( $new_instance );
 
 		return $instance;
+	}
+
+	private function taxonomy_helper() {
+
+		$taxonomies         = get_taxonomies();
+		$taxonomies_default = apply_filters(
+			'MlRecommendationBlock__exclude_default_taxonomies',
+			[
+				'category',
+				'post_tag',
+				'nav_menu',
+				'link_category',
+				'post_format'
+			]
+		);
+
+		$diff = array_diff( $taxonomies, $taxonomies_default );
+
+		if ( empty( $diff ) ) {
+			return false;
+		}
+
+		return array_keys( $diff );
 	}
 
 	private function validate( $array ) {
@@ -88,7 +129,9 @@ class MagicWidget extends WP_Widget {
 				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : '';
 			} else if ( 'posts_per_page' === $k ) {
 				$array[ $k ] = ( is_numeric( $v ) ) ? intval( $v ) : 8;
-			}
+			}else if('exclude_posts_in_taxonomy' === $k){
+				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : 'none';
+            }
 
 		} );
 
