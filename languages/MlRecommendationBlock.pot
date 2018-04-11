@@ -1,6 +1,5 @@
 # Copyright (C) 2018 MlRecommendationBlock
 # This file is distributed under the same license as the MlRecommendationBlock package.
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MlRecommendationBlock\n"
@@ -9,56 +8,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/MlRecommendationBlock/Classes/MetaBox.php:26
+#: src/MlRecommendationBlock/Classes/MetaBox.php:28
 msgid "Post visibility in recommendation block"
 msgstr ""
 
-#: src/MlRecommendationBlock/Classes/MetaBox.php:41
+#: src/MlRecommendationBlock/Classes/MetaBox.php:42
 msgid "Visibility"
 msgstr ""
 
-#: src/MlRecommendationBlock/Classes/MetaBox.php:44
+#: src/MlRecommendationBlock/Classes/MetaBox.php:45
 msgid "default"
 msgstr ""
 
-#: src/MlRecommendationBlock/Classes/MetaBox.php:47
+#: src/MlRecommendationBlock/Classes/MetaBox.php:48
 msgid "include"
 msgstr ""
 
-#: src/MlRecommendationBlock/Classes/MetaBox.php:50
+#: src/MlRecommendationBlock/Classes/MetaBox.php:51
 msgid "exclude"
 msgstr ""
 
-#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:26
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:27
 msgid "Recommendation "
 msgstr ""
 
-#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:28
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:29
 msgid "Recommendation block widget"
 msgstr ""
 
-#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:195
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:100
+msgid "No recommendation posts"
+msgstr ""
+
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:240
 msgid "Number of posts:"
 msgstr ""
 
-#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:206
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:251
 msgid "Last days:"
 msgstr ""
 
-#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:217
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:262
 msgid "Exclude Taxonomy:"
 msgstr ""
 
-#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:221
+#: src/MlRecommendationBlock/Widgets/WidgetRecommendation.php:266
 msgid "none"
 msgstr ""

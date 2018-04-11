@@ -5,18 +5,22 @@ namespace MlRecommendationBlock\Classes;
 
 class MetaBox
 {
+    // slug произвольного поля для соранения статуса (включить/исключить)
     public static $form_attr_name = '_ml_recommendation';
 
     function __construct() {
 
         if ( current_user_can( 'publish_posts' ) ) {
             add_action( 'admin_init', [ $this, 'metabox_fields' ], 1 );
-//			add_action( 'save_post', [ $this, 'fields_update' ], 0 );
+
+            // соранение метаданых в момент сохранения поста
+			add_action( 'save_post', [ $this, 'fields_update' ], 0 );
         }
 
     }
 
     function metabox_fields() {
+        //Фильтр для добавления подежки кастомных типов постов
         $post_types = apply_filters( 'MlRecommendationBlock__post_types', [ 'post' ] );
 
         add_meta_box(
@@ -32,7 +36,6 @@ class MetaBox
 
     function fields_html( $post ) {
         $val = get_post_meta( $post->ID, self::$form_attr_name . '_flag', true );
-
         ?>
         <p>
             <label>
