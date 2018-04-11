@@ -1,6 +1,6 @@
 ## Как работает 
 
-<img width='100' height='100' src="screenshot-1.png" title='Widget settings' alt='Widget settings' align='left'>
+<img width='438' height='300' src="screenshot-1.png" title='Widget settings' alt='Widget settings' align='left'>
 
 В настройках виджета можно задать заголовок, количество постов, таксономию для исключения постов входящих в нее, количество дней за которое нужно выводить посты.
 
