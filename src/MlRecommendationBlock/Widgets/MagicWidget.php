@@ -24,10 +24,9 @@ class MagicWidget extends WP_Widget {
 
 	public function widget( $args, $instance ) {
 		$title          = apply_filters( 'widget_title', $instance['title'] );
-
 		echo $args['before_widget'];
 		?>
-        <h1>1224545454544</h1>
+
 		<?php
 		echo $args['after_widget'];
 	}
@@ -50,8 +49,31 @@ class MagicWidget extends WP_Widget {
             <input id="<?php echo $this->get_field_id( 'posts_per_page' ); ?>"
                    name="<?php echo $this->get_field_name( 'posts_per_page' ); ?>"
                    type="number" value="<?php echo $instance['posts_per_page']; ?>"
+                   min="-1"
                    size="3"/>
         </p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'last_days' ); ?>">
+				<?php _e( 'Number of posts:', 'MlRecommendationBlock' ); ?>
+            </label>
+            <input id="<?php echo $this->get_field_id( 'last_days' ); ?>"
+                   name="<?php echo $this->get_field_name( 'last_days' ); ?>"
+                   type="number" value="<?php echo $instance['last_days']; ?>"
+                   min="-1"
+                   size="3"/>
+        </p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'posts_per_page' ); ?>">
+				<?php _e( 'Exclude posts:', 'MlRecommendationBlock' ); ?>
+            </label>
+            <input id="<?php echo $this->get_field_id( 'exclude' ); ?>"
+                   name="<?php echo $this->get_field_name( 'exclude' ); ?>"
+                   type="number" value="<?php echo $instance['exclude']; ?>"
+                   size="3"/>
+        </p>
+
 		<?php
 	}
 
@@ -66,11 +88,14 @@ class MagicWidget extends WP_Widget {
 
 
 		array_walk( $array, function ( $v, $k ) {
-			if ( 'title' == $k ) {
+
+			if ( 'title' === $k || 'last_days' === $k ) {
 				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : '';
-			} else if ( 'posts_per_page' == $k ) {
+			} else if ( 'posts_per_page' === $k ) {
 				$array[ $k ] = ( is_numeric( $v ) ) ? intval( $v ) : 8;
-			}
+			}else if('exclude' === $k){
+				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : false;
+            }
 
 		} );
 
