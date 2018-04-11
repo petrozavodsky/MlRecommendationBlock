@@ -9,7 +9,7 @@ use MlRecommendationBlock\Utils\WidgetHelper;
 use WP_Widget;
 
 class WidgetRecommendation extends WP_Widget {
-    use WidgetHelper;
+	use WidgetHelper;
 
 	public $css = true;
 	private $suffix = " - ML widget";
@@ -32,10 +32,9 @@ class WidgetRecommendation extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-	    $title      = apply_filters( 'widget_title', $instance['title'] );
+		$title      = apply_filters( 'widget_title', $instance['title'] );
 		$post_types = apply_filters( 'MlRecommendationBlock__post_types', [ 'post' ] );
 		$image_size = apply_filters( 'MlRecommendationBlock__image_size', 'thumbnail' );
-
 
 
 		$s_posts = $this->get_posts( $post_types, $instance['posts_per_page'], $instance['last_days'], $instance['exclude_posts_in_taxonomy'] );
@@ -44,10 +43,10 @@ class WidgetRecommendation extends WP_Widget {
 
 		if ( ! empty( $p_include ) ) {
 			$f_posts = array_merge( $p_include, $s_posts );
-			$f_posts = array_slice($f_posts,0, $instance['posts_per_page']);
-		}else {
+			$f_posts = array_slice( $f_posts, 0, $instance['posts_per_page'] );
+		} else {
 			$f_posts = $s_posts;
-        }
+		}
 
 		if ( 0 < count( $f_posts ) ):
 			echo $args['before_widget'];
@@ -59,16 +58,16 @@ class WidgetRecommendation extends WP_Widget {
                             <h2><?php echo $title; ?></h2>
                         </div>
 					<?php endif; ?>
-					<?php
-
-					foreach ( $f_posts as $post ):?>
-						<?php echo apply_filters(
-							'MlRecommendationBlock__post_item_template',
-							$this->template( $post, $image_size ),
-							$post,
-							$image_size
-						); ?>
-					<?php endforeach; ?>
+                    <div class="ml-recommendation__posts-wrap">
+						<?php foreach ( $f_posts as $post ): ?>
+							<?php echo apply_filters(
+								'MlRecommendationBlock__post_item_template',
+								$this->template( $post, $image_size ),
+								$post,
+								$image_size
+							); ?>
+						<?php endforeach; ?>
+                    </div>
                 </div>
             </div>
 			<?php

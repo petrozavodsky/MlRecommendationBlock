@@ -1,0 +1,2 @@
+.recommendation__post-wrapper{position:relative;padding-bottom:24px;padding-top:20px}.recommendation__post-wrapper:after{background:#aaa;content:'';position:absolute;display:block;width:90%;height:3px;margin:auto;bottom:16px;left:0;right:0}.recommendation__post-wrapper:first-child{padding-top:0}.recommendation__post-wrapper:last-child{padding-bottom:0}.recommendation__post-wrapper:last-child:after{display:none}.recommendation__post-title{padding:10px 0}
+/*# sourceMappingURL=maps/MlRecommendationBlock-mlrecommendationblock-widgets-widgetrecommendation.css.map */

@@ -11,14 +11,14 @@ trait WidgetHelper {
 
 			if ( ! is_active_widget( 0, $this->id, $this->id_base ) === false ) {
 
-				$this->add_js_css($this->id_base);
+				$this->add_js_css( $this->id_base );
 			}
 		} );
 	}
 
-	public function add_js_css($base){
+	public function add_js_css( $base ) {
 		if ( $this->css ) {
-			d($this->addCss( $base, "header" ) );
+			$this->addCss( $base, "header" );
 		}
 		if ( $this->js ) {
 			$this->addJs( $base, "header" );
