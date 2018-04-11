@@ -27,29 +27,50 @@ class WidgetRecommendation extends WP_Widget {
 		$post_types = apply_filters( 'MlRecommendationBlock__post_types', [ 'post' ] );
 		$image_size = apply_filters( 'MlRecommendationBlock__image_size', 'thumbnail' );
 
-		echo $args['before_widget'];
-		?>
-        <div class="ml-recommendation__wrapper">
-            <div class="ml-recommendation__wrap">
-                <div class="ml-recommendation__title"> <?php echo $title; ?></div>
-				<?php
-				$args  = [
-					'posts_per_page' => $instance['posts_per_page'],
-					'post_type'      => $post_types,
-				];
-				$posts = get_posts( $args );
-				foreach ( $posts as $post ):?>
-					<?php echo apply_filters(
-						'MlRecommendationBlock__post_item_template',
-						$this->template( $post, $image_size ),
-						$post,
-						$image_size
-					); ?>
-				<?php endforeach; ?>
+
+		$params = new QueryParams( $instance['last_days'] );
+
+		$args = [
+			'posts_per_page' => $instance['posts_per_page'],
+			'post_type'      => $post_types,
+			'exclude'        => $params->excluded,
+			'tax_query'      => [
+				'relation' => 'AND',
+				[
+					'taxonomy' => 'post_tag',
+					'field'    => 'id',
+					'terms'    => $params->tags,
+					'operator' => 'IN'
+
+				],
+
+			]
+		];
+
+
+		$posts = get_posts( $args );
+
+		if ( 0 < count( $posts ) ):
+			echo $args['before_widget'];
+			?>
+            <div class="ml-recommendation__wrapper">
+                <div class="ml-recommendation__wrap">
+                    <div class="ml-recommendation__title"> <?php echo $title; ?></div>
+					<?php
+
+					foreach ( $posts as $post ):?>
+						<?php echo apply_filters(
+							'MlRecommendationBlock__post_item_template',
+							$this->template( $post, $image_size ),
+							$post,
+							$image_size
+						); ?>
+					<?php endforeach; ?>
+                </div>
             </div>
-        </div>
-		<?php
-		echo $args['after_widget'];
+			<?php
+			echo $args['after_widget'];
+		endif;
 	}
 
 	private function template( $post, $image_size ) {
@@ -57,14 +78,15 @@ class WidgetRecommendation extends WP_Widget {
 		?>
         <div class="recommendation__post-wrapper">
             <div class="recommendation__post-wrap">
-                <div class="recommendation__post-image">
-					<?php echo get_the_post_thumbnail( $post, $image_size ); ?>
-                </div>
+              <a href="<?php echo get_permalink($post);?>" class="recommendation__post-link" >
+                  <div class="recommendation__post-image">
+		              <?php echo get_the_post_thumbnail( $post, $image_size ); ?>
+                  </div>
 
-                <div class="recommendation__post-title">
-					<?php echo get_the_title( $post ); ?>
-                </div>
-
+                  <div class="recommendation__post-title">
+		              <?php echo get_the_title( $post ); ?>
+                  </div>
+              </a>
             </div>
         </div>
 		<?php
@@ -77,7 +99,6 @@ class WidgetRecommendation extends WP_Widget {
 	public function form( $instance ) {
 
 		$instance = $this->validate( $instance );
-		d( $instance );
 		?>
 
         <p>
