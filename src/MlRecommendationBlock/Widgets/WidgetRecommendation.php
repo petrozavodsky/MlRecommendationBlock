@@ -6,7 +6,7 @@ use MlRecommendationBlock;
 use MlRecommendationBlock\Classes\QueryParams;
 use WP_Widget;
 
-class MagicWidget extends WP_Widget {
+class WidgetRecommendation extends WP_Widget {
 	private $suffix = " - ML widget";
 
 	function __construct() {
