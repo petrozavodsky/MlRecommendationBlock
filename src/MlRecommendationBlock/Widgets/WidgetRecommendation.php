@@ -55,7 +55,11 @@ class WidgetRecommendation extends WP_Widget {
 			?>
             <div class="ml-recommendation__wrapper">
                 <div class="ml-recommendation__wrap">
-                    <div class="ml-recommendation__title"> <?php echo $title; ?></div>
+					<?php if ( ! empty( $title ) ): ?>
+                        <div class="ml-recommendation__title">
+                            <h2><?php echo $title; ?></h2>
+                        </div>
+					<?php endif; ?>
 					<?php
 
 					foreach ( $posts as $post ):?>
@@ -78,15 +82,15 @@ class WidgetRecommendation extends WP_Widget {
 		?>
         <div class="recommendation__post-wrapper">
             <div class="recommendation__post-wrap">
-              <a href="<?php echo get_permalink($post);?>" class="recommendation__post-link" >
-                  <div class="recommendation__post-image">
-		              <?php echo get_the_post_thumbnail( $post, $image_size ); ?>
-                  </div>
+                <a href="<?php echo get_permalink( $post ); ?>" class="recommendation__post-link">
+                    <div class="recommendation__post-image">
+						<?php echo get_the_post_thumbnail( $post, $image_size ); ?>
+                    </div>
 
-                  <div class="recommendation__post-title">
-		              <?php echo get_the_title( $post ); ?>
-                  </div>
-              </a>
+                    <div class="recommendation__post-title">
+						<?php echo get_the_title( $post ); ?>
+                    </div>
+                </a>
             </div>
         </div>
 		<?php
