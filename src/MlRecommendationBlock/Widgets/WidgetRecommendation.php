@@ -37,10 +37,8 @@ class WidgetRecommendation extends WP_Widget {
 		$image_size = apply_filters( 'MlRecommendationBlock__image_size', 'thumbnail' );
 
 
-		$s_posts = $this->get_posts( $post_types, $instance['posts_per_page'], $instance['last_days'], $instance['exclude_posts_in_taxonomy'] );
-
+		$s_posts   = $this->get_posts( $post_types, $instance['posts_per_page'], $instance['last_days'], $instance['exclude_posts_in_taxonomy'] );
 		$p_include = $this->get_posts_imclude( $post_types, $instance['posts_per_page'], $instance['last_days'] );
-
 		if ( ! empty( $p_include ) ) {
 			$f_posts = array_merge( $p_include, $s_posts );
 			$f_posts = array_slice( $f_posts, 0, $instance['posts_per_page'] );
