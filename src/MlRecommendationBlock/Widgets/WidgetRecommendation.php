@@ -34,18 +34,42 @@ class WidgetRecommendation extends WP_Widget {
 			'posts_per_page' => $instance['posts_per_page'],
 			'post_type'      => $post_types,
 			'exclude'        => $params->excluded,
-			'tax_query'      => [
-				'relation' => 'AND',
+		];
+
+
+		if ( 'none' !== $instance['exclude_posts_in_taxonomy'] ) {
+			$args['tax_query'] = [
+				'relation' => 'AND'
+			];
+		} else {
+			$args['tax_query'] = [];
+		}
+
+		$args['tax_query'] = array_merge(
+			$args['tax_query'],
+			[
 				[
 					'taxonomy' => 'post_tag',
 					'field'    => 'id',
 					'terms'    => $params->tags,
 					'operator' => 'IN'
-
-				],
-
+				]
 			]
-		];
+		);
+
+		if ( 'none' !== $instance['exclude_posts_in_taxonomy'] ) {
+
+			$args['tax_query'] = array_merge(
+				$args['tax_query'],
+				[
+					[
+						'taxonomy' => $instance['exclude_posts_in_taxonomy'],
+						'operator' => 'NOT EXISTS',
+					]
+				]
+			);
+
+		}
 
 
 		$posts = get_posts( $args );
