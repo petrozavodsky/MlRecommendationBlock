@@ -23,7 +23,7 @@ use MlRecommendationBlock\Classes\MetaBox;
 use MlRecommendationBlock\Utils\ActivateWidgets;
 
 class MlRecommendationBlock extends Wrap {
-	public $version = '1.0.0-rc.3';
+	public $version = '1.0.0';
 	public static $textdomine;
 
 	function __construct() {
