@@ -76,6 +76,8 @@ class WidgetRecommendation extends WP_Widget {
 
 	public function form( $instance ) {
 
+		$instance = $this->validate( $instance );
+		d( $instance );
 		?>
 
         <p>
@@ -165,14 +167,14 @@ class WidgetRecommendation extends WP_Widget {
 
 		$array = array_map( 'trim', $array );
 
-		array_walk( $array, function ( $v, $k ) {
+		array_walk( $array, function ( $v, $k ) use ( &$array ) {
 
 			if ( 'title' === $k ) {
 				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : '';
 			} else if ( 'last_days' === $k ) {
-				$array[ $k ] = ( is_numeric( $v ) ) ? intval( $v ) : 3;
+				$array[ $k ] = ( ! empty( $v ) && is_numeric( $v ) ) ? intval( $v ) : 3;
 			} else if ( 'posts_per_page' === $k ) {
-				$array[ $k ] = ( is_numeric( $v ) ) ? intval( $v ) : 8;
+				$array[ $k ] = ( ! empty( $v ) && is_numeric( $v ) ) ? intval( $v ) : 8;
 			} else if ( 'exclude_posts_in_taxonomy' === $k ) {
 				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : 'none';
 			}
