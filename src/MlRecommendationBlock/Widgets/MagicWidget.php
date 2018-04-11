@@ -68,15 +68,7 @@ class MagicWidget extends WP_Widget {
                    size="3"/>
         </p>
 
-        <p>
-            <label for="<?php echo $this->get_field_id( 'posts_per_page' ); ?>">
-				<?php _e( 'Exclude posts:', 'MlRecommendationBlock' ); ?>
-            </label>
-            <input id="<?php echo $this->get_field_id( 'exclude' ); ?>"
-                   name="<?php echo $this->get_field_name( 'exclude' ); ?>"
-                   type="number" value="<?php echo $instance['exclude']; ?>"
-                   size="3"/>
-        </p>
+
 
 		<?php
 	}
@@ -96,9 +88,7 @@ class MagicWidget extends WP_Widget {
 				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : '';
 			} else if ( 'posts_per_page' === $k ) {
 				$array[ $k ] = ( is_numeric( $v ) ) ? intval( $v ) : 8;
-			}else if('exclude' === $k){
-				$array[ $k ] = ( ! empty( $v ) ) ? strip_tags( $v ) : false;
-            }
+			}
 
 		} );
 
