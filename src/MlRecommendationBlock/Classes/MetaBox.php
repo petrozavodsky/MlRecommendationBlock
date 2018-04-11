@@ -3,7 +3,7 @@
 namespace MlRecommendationBlock\Classes;
 
 
-class Metabox
+class MetaBox
 {
     public static $form_attr_name = '_ml_recommendation';
 
