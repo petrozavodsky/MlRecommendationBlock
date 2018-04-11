@@ -7,43 +7,45 @@ Author URI: http://alkoweb.ru
 Requires PHP: 7.0
 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-require_once( plugin_dir_path( __FILE__ ) . "includes/Autoloader.php" );
+require_once(plugin_dir_path(__FILE__) . "includes/Autoloader.php");
 
 use MlRecommendationBlock\Autoloader;
 
-new Autoloader( __FILE__, 'MlRecommendationBlock' );
+new Autoloader(__FILE__, 'MlRecommendationBlock');
 
 
 use MlRecommendationBlock\Base\Wrap;
-use MlRecommendationBlock\Classes\MetaBox;
+use MlRecommendationBlock\Classes\Metabox;
 use MlRecommendationBlock\Utils\ActivateWidgets;
 
-class MlRecommendationBlock extends Wrap {
+class MlRecommendationBlock extends Wrap
+{
 
-	public $version = '1.0.0';
-	public static $textdomine;
+    public $version = '1.0.0';
+    public static $textdomine;
 
-	function __construct() {
-		self::$textdomine = $this->setTextdomain();
+    function __construct()
+    {
+        self::$textdomine = $this->setTextdomain();
 
-		new MetaBox();
+        new Metabox();
+        new ActivateWidgets(
+            __FILE__,
+            'Widgets',
+            'MlRecommendationBlock'
+        );
 
-		new ActivateWidgets(
-			__FILE__,
-			'Widgets',
-			'MlRecommendationBlock'
-		);
-
-	}
+    }
 
 }
 
-function MlRecommendationBlock__init() {
-	new MlRecommendationBlock();
+function MlRecommendationBlock__init()
+{
+    new MlRecommendationBlock();
 }
 
-add_action( 'plugins_loaded', 'MlRecommendationBlock__init', 30 );
+add_action('plugins_loaded', 'MlRecommendationBlock__init', 30);
