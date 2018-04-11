@@ -7,6 +7,8 @@ class MetaBox {
 
 	public static $form_attr_name = '_ml_recommendation';
 
+
+
 	function __construct() {
 
 		if ( current_user_can( 'publish_posts' ) ) {
@@ -17,7 +19,7 @@ class MetaBox {
 	}
 
 	function metabox_fields() {
-	    $post_types = apply_filters('MlRecommendationBlock__post_types',[ 'post' ]);
+		$post_types = apply_filters( 'MlRecommendationBlock__post_types', [ 'post' ] );
 
 		add_meta_box(
 			'recommendation_block_metabox',

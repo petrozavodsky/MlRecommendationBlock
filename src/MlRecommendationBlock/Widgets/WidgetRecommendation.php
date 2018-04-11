@@ -5,14 +5,21 @@ namespace MlRecommendationBlock\Widgets;
 use MlRecommendationBlock;
 use MlRecommendationBlock\Classes\MetaBox;
 use MlRecommendationBlock\Classes\QueryParams;
+use MlRecommendationBlock\Utils\WidgetHelper;
 use WP_Widget;
 
 class WidgetRecommendation extends WP_Widget {
+    use WidgetHelper;
+
+	public $css = true;
 	private $suffix = " - ML widget";
 
 	function __construct() {
 		$className = get_called_class();
 		$className = str_replace( "\\", '-', $className );
+
+		$this->addWidgetAssets();
+
 
 		parent::__construct(
 			$className,
@@ -21,10 +28,11 @@ class WidgetRecommendation extends WP_Widget {
 				'description' => __( "Recommendation block widget", 'MlRecommendationBlock' ) . $this->suffix
 			]
 		);
+
 	}
 
 	public function widget( $args, $instance ) {
-		$title      = apply_filters( 'widget_title', $instance['title'] );
+	    $title      = apply_filters( 'widget_title', $instance['title'] );
 		$post_types = apply_filters( 'MlRecommendationBlock__post_types', [ 'post' ] );
 		$image_size = apply_filters( 'MlRecommendationBlock__image_size', 'thumbnail' );
 
