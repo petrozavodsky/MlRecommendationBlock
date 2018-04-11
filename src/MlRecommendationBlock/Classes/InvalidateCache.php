@@ -10,7 +10,7 @@ class InvalidateCache
 
     public function __construct()
     {
-        add_action('save_post', [__CLASS__, 'fields_update'], 0, 2);
+        add_action('save_post', [__CLASS__, 'invalidate'], 0, 2);
     }
 
 
