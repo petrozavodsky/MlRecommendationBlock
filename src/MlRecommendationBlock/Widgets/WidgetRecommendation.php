@@ -3,6 +3,7 @@
 namespace MlRecommendationBlock\Widgets;
 
 use MlRecommendationBlock;
+use MlRecommendationBlock\Classes\MetaBox;
 use MlRecommendationBlock\Classes\QueryParams;
 use WP_Widget;
 
@@ -28,16 +29,88 @@ class WidgetRecommendation extends WP_Widget {
 		$image_size = apply_filters( 'MlRecommendationBlock__image_size', 'thumbnail' );
 
 
-		$params = new QueryParams( $instance['last_days'] );
+
+		$s_posts = $this->get_posts( $post_types, $instance['posts_per_page'], $instance['last_days'], $instance['exclude_posts_in_taxonomy'] );
+
+		$p_include = $this->get_posts_imclude( $post_types, $instance['posts_per_page'], $instance['last_days'] );
+
+		if ( ! empty( $p_include ) ) {
+			$f_posts = array_merge( $p_include, $s_posts );
+			$f_posts = array_slice($f_posts,0, $instance['posts_per_page']);
+		}else {
+			$f_posts = $s_posts;
+        }
+
+		if ( 0 < count( $f_posts ) ):
+			echo $args['before_widget'];
+			?>
+            <div class="ml-recommendation__wrapper">
+                <div class="ml-recommendation__wrap">
+					<?php if ( ! empty( $title ) ): ?>
+                        <div class="ml-recommendation__title">
+                            <h2><?php echo $title; ?></h2>
+                        </div>
+					<?php endif; ?>
+					<?php
+
+					foreach ( $f_posts as $post ):?>
+						<?php echo apply_filters(
+							'MlRecommendationBlock__post_item_template',
+							$this->template( $post, $image_size ),
+							$post,
+							$image_size
+						); ?>
+					<?php endforeach; ?>
+                </div>
+            </div>
+			<?php
+			echo $args['after_widget'];
+		endif;
+	}
+
+	private function get_posts_imclude( $post_types, $posts_per_page, $last_days ) {
+		$params = new QueryParams( $last_days );
 
 		$args = [
-			'posts_per_page' => $instance['posts_per_page'],
+			'posts_per_page' => $posts_per_page,
 			'post_type'      => $post_types,
 			'exclude'        => $params->excluded,
+			'meta_query'     => [
+				'relation' => 'AND',
+				[
+					'key'     => MetaBox::$form_attr_name . '_flag',
+					'value'   => 'include',
+					'compare' => '='
+				]
+			]
 		];
 
+		return get_posts( $args );
+	}
 
-		if ( 'none' !== $instance['exclude_posts_in_taxonomy'] ) {
+	private function get_posts( $post_types, $posts_per_page, $last_days, $exclude_tax ) {
+		$params = new QueryParams( $last_days );
+
+		$args = [
+			'posts_per_page' => $posts_per_page,
+			'post_type'      => $post_types,
+			'exclude'        => $params->excluded,
+			'meta_query'     => [
+				'relation' => 'AND',
+				[
+					'key'     => MetaBox::$form_attr_name . '_flag',
+					'value'   => 'exclude',
+					'compare' => '!='
+				],
+				[
+					'key'     => MetaBox::$form_attr_name . '_flag',
+					'value'   => 'include',
+					'compare' => '!='
+				]
+			]
+		];
+
+		if ( 'none' !== $exclude_tax ) {
 			$args['tax_query'] = [
 				'relation' => 'AND'
 			];
@@ -57,13 +130,13 @@ class WidgetRecommendation extends WP_Widget {
 			]
 		);
 
-		if ( 'none' !== $instance['exclude_posts_in_taxonomy'] ) {
+		if ( 'none' !== $exclude_tax ) {
 
 			$args['tax_query'] = array_merge(
 				$args['tax_query'],
 				[
 					[
-						'taxonomy' => $instance['exclude_posts_in_taxonomy'],
+						'taxonomy' => $exclude_tax,
 						'operator' => 'NOT EXISTS',
 					]
 				]
@@ -71,34 +144,7 @@ class WidgetRecommendation extends WP_Widget {
 
 		}
 
-
-		$posts = get_posts( $args );
-
-		if ( 0 < count( $posts ) ):
-			echo $args['before_widget'];
-			?>
-            <div class="ml-recommendation__wrapper">
-                <div class="ml-recommendation__wrap">
-					<?php if ( ! empty( $title ) ): ?>
-                        <div class="ml-recommendation__title">
-                            <h2><?php echo $title; ?></h2>
-                        </div>
-					<?php endif; ?>
-					<?php
-
-					foreach ( $posts as $post ):?>
-						<?php echo apply_filters(
-							'MlRecommendationBlock__post_item_template',
-							$this->template( $post, $image_size ),
-							$post,
-							$image_size
-						); ?>
-					<?php endforeach; ?>
-                </div>
-            </div>
-			<?php
-			echo $args['after_widget'];
-		endif;
+		return get_posts( $args );
 	}
 
 	private function template( $post, $image_size ) {

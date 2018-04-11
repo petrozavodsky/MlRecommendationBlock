@@ -5,7 +5,7 @@ namespace MlRecommendationBlock\Classes;
 
 class MetaBox {
 
-	private $form_attr_name = '_h_soc_helper';
+	public static $form_attr_name = '_ml_recommendation';
 
 	function __construct() {
 
@@ -31,13 +31,13 @@ class MetaBox {
 	}
 
 	function fields_html( $post ) {
-		$val = get_post_meta( $post->ID, $this->form_attr_name . '_flag', true );
+		$val = get_post_meta( $post->ID, self::$form_attr_name . '_flag', true );
 
 		?>
         <p>
             <label>
 				<?php _e( 'Visibility', 'MlRecommendationBlock' ); ?>
-                <select name="<?php echo $this->form_attr_name; ?>[<?php echo $this->form_attr_name . '_flag'; ?>]">
+                <select name="<?php echo self::$form_attr_name; ?>[<?php echo self::$form_attr_name . '_flag'; ?>]">
                     <option value="default" <?php selected( $val, 'default', true ); ?> >
 						<?php _e( 'default', 'MlRecommendationBlock' ); ?>
                     </option>
@@ -51,14 +51,14 @@ class MetaBox {
             </label>
         </p>
         <input type="hidden"
-               name="<?php echo $this->form_attr_name; ?>_fields_nonce"
+               name="<?php echo self::$form_attr_name; ?>_fields_nonce"
                value="<?php echo wp_create_nonce( __FILE__ ); ?>"/>
 		<?php
 	}
 
 	function fields_update( $post_id ) {
-		if ( is_array( $_POST ) && array_key_exists( $this->form_attr_name . '_fields_nonce', $_POST )
-		     && ! wp_verify_nonce( $_POST[ $this->form_attr_name . '_fields_nonce' ], __FILE__ ) ) {
+		if ( is_array( $_POST ) && array_key_exists( self::$form_attr_name . '_fields_nonce', $_POST )
+		     && ! wp_verify_nonce( $_POST[ self::$form_attr_name . '_fields_nonce' ], __FILE__ ) ) {
 			return false;
 		}
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
@@ -67,13 +67,13 @@ class MetaBox {
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return false;
 		}
-		if ( ! isset( $_POST[ $this->form_attr_name ] ) ) {
+		if ( ! isset( $_POST[ self::$form_attr_name ] ) ) {
 			return false;
 		};
 
-		$_POST[ $this->form_attr_name ] = array_map( 'trim', $_POST[ $this->form_attr_name ] );
+		$_POST[ self::$form_attr_name ] = array_map( 'trim', $_POST[ self::$form_attr_name ] );
 
-		foreach ( $_POST[ $this->form_attr_name ] as $key => $value ) {
+		foreach ( $_POST[ self::$form_attr_name ] as $key => $value ) {
 			if ( empty( $value ) ) {
 				delete_post_meta( $post_id, $key );
 				continue;
