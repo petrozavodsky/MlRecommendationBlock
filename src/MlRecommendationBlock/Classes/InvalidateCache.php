@@ -27,7 +27,7 @@ class InvalidateCache
     {
         global $wpdb;
         $cache_field = MlRecommendationBlock::$cache_prefix;
-        $wpdb->query("DELETE FROM `{$wpdb->prefix}options`WHERE `option_name` LIKE {$cache_field}");
+        $wpdb->query("DELETE FROM `{$wpdb->prefix}options`WHERE `option_name` LIKE '%{$cache_field}%';");
 
     }
 
